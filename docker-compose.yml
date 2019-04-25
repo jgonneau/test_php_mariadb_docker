@@ -1,0 +1,26 @@
+version: '3.6'
+services:
+    web:
+        image: 'webdevops/php-nginx:7.2'
+        ports:
+          - 9000:80
+        volumes:
+            - './:/app'
+        working_dir: /app
+        depends_on:
+          - mariadb
+    adminer:
+        image: 'adminer:4.7'
+        ports:
+            - '8081:8080'
+    mariadb:
+        image: 'mariadb:10.3'
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./docker/database:/var/lib/mysql
+        environment:
+            - MYSQL_DATABASE=t35t
+            - MYSQL_USER=test
+            - MYSQL_PASSWORD=test
+            - MYSQL_RANDOM_ROOT_PASSWORD=yes
